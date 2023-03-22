@@ -137,7 +137,7 @@ async def update_metadata(response: Response, code: str, steam_id: str = Cookie(
             if achieve["apiname"] == "go_to_bed":
                 role.add_or_edit_metadata(key="allperfect", value=True)
             success += 1
-    percentage = (success / total) * 100
+    percentage = round((success / total) * 100)
     role.add_or_edit_metadata(key="percentage", value=percentage)
     role.add_or_edit_metadata(key="completed", value=False)
     if percentage == 100:
