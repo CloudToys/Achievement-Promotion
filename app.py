@@ -27,7 +27,8 @@ client = LinkedRolesOAuth2(
     scopes=("identify", "role_connections.write"),
     state=os.getenv("COOKIE_SECRET")
 )
-fn = Fernet(os.getenv("ENCRYPT_KEY"))
+key = Fernet.generate_key()
+fn = Fernet(key)
 
 def encrypt(text: str) -> str:
     return fn.encrypt(text.encode())
@@ -48,7 +49,11 @@ async def startup():
 async def shutdown():
     await client.close()
 
-@app.get('/verify')
+@app.get("/")
+async def root():
+    return RedirectResponse(url="https://github.com/CloudToys/Achievement-Promotion")
+
+@app.get("/verify")
 async def link():
     steam_openid_url = "https://steamcommunity.com/openid/login"
     u = {
