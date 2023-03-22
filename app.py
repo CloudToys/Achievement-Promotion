@@ -83,6 +83,8 @@ async def setup(request: Request):
 
 async def validate(data: dict) -> bool:
     base = "https://steamcommunity.com/openid/login"
+    if "openid.mode" not in data:
+        return False
     params = {
         "openid.assoc_handle": data["openid.assoc_handle"],
         "openid.sig": data["openid.sig"],
