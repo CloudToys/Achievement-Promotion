@@ -22,7 +22,6 @@ async def async_list(values: list) -> Any:
 @commands.is_owner()
 async def _addConnection(inter: disnake.ApplicationCommandInteraction):
     await inter.response.defer(ephemeral=True)
-    client = LinkedRolesOAuth2(client_id=os.getenv("CLIENT_ID"), token=os.getenv("BOT_TOKEN"))
     records = [
         RoleMetadataRecord(
             key="complete",
@@ -50,7 +49,9 @@ async def _addConnection(inter: disnake.ApplicationCommandInteraction):
             description=achievement["description"],
             type=RoleMetadataType.boolean_equal
         ))
-    result = await client.register_role_metadata(records=tuple(records), force=True)
-    await inter.edit_original_message(content=str(result))
+    
+    async with LinkedRolesOAuth2(client_id=os.getenv("CLIENT_ID"), token=os.getenv("BOT_TOKEN")) as client:
+        result = await client.register_role_metadata(records=tuple(records), force=True)
+        await inter.edit_original_message(content=str(result))
 
 bot.run(os.getenv("BOT_TOKEN"))
