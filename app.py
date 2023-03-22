@@ -65,14 +65,14 @@ async def link():
 
 @app.get('/callback/steam') 
 async def setup(request: Request, response: Response):
-    valid = await validate(request.query_params)
+    valid = await validate(dict(request.query_params))
     if not valid:
         raise HTTPException(status_code=404, detail="We can't verify that you have Steam profile.")
     url = client.get_oauth_url()
     response.set_cookie(key="steam_id", value=encrypt(request.query_params.get("openid.claimed_id")), max_age=300)
     return RedirectResponse(url=url)
 
-async def validate(data: dict):
+async def validate(data: dict) -> bool:
     base = "https://steamcommunity.com/openid/login"
     params = {
         "openid.assoc_handle": data["openid.assoc_handle"],
