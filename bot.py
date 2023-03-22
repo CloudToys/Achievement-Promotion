@@ -13,6 +13,9 @@ bot = commands.InteractionBot(
     intents=disnake.Intents.default()
 )
 
+def list_chunk(lst, n):
+    return [lst[i:i+n] for i in range(0, len(lst), n)]
+
 async def async_list(values: list) -> Any:
     for value in values:
         yield value
@@ -26,13 +29,13 @@ async def _addConnection(inter: disnake.ApplicationCommandInteraction):
         RoleMetadataRecord(
             key="complete",
             name="ALL CLEAR!!",
-            description="게임의 모든 도전 과제를 달성했는지 여부입니다.",
+            description="게임의 도전 과제를 모두 달성해야 합니다.",
             type=RoleMetadataType.boolean_equal
         ),
         RoleMetadataRecord(
             key="percentage",
             name="Achievement Percentage",
-            description="게임의 도전 과제 달성률입니다.",
+            description="% 이상의 도전 과제를 달성해야 합니다.",
             type=RoleMetadataType.interger_greater_than_or_equal
         )
     ]
@@ -50,12 +53,11 @@ async def _addConnection(inter: disnake.ApplicationCommandInteraction):
             type=RoleMetadataType.boolean_equal
         ))
     
+    await inter.edit_original_message(content="역할 데이터 등록을 시작합니다!")
     async with LinkedRolesOAuth2(client_id=os.getenv("CLIENT_ID"), token=os.getenv("BOT_TOKEN")) as client:
-        try:
-            result = await client.register_role_metadata(records=tuple(records), force=True)
-        except Exception as e:
-            await inter.edit_original_message(content=f"연동에 실패했습니다.\n{e}")
-        else:
-            await inter.edit_original_message(content=str(result))
+        async for rec in async_list(list_chunk(records, 4)):
+            result = await client.register_role_metadata(records=tuple(rec), force=True)
+            await inter.followup.send(result)
+            await asyncio.sleep(5)
 
 bot.run(os.getenv("BOT_TOKEN"))
