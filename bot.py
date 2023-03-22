@@ -2,7 +2,6 @@ import os
 import asyncio
 from typing import Any
 
-import aiohttp
 import disnake
 from disnake.ext import commands
 from dotenv import load_dotenv
@@ -39,30 +38,12 @@ async def _addConnection(inter: disnake.ApplicationCommandInteraction):
             type=RoleMetadataType.interger_greater_than_or_equal
         )
     ]
-    data = None
-    async with aiohttp.ClientSession() as cs:
-        async with cs.get(f"http://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid={os.getenv('STEAM_GAME_ID')}&key={os.getenv('STEAM_API_KEY')}&steamid={os.getenv('STEAM_OWNER_ID')}&l=ko") as r:
-            res = await r.json()
-            data = res["playerstats"]
-
-    async for achievement in async_list(data["achievements"]):
-        records.append(RoleMetadataRecord(
-            key=achievement["apiname"],
-            name=achievement["name"],
-            description=achievement["description"],
-            type=RoleMetadataType.boolean_equal
-        ))
-    
-    await inter.edit_original_message(content="역할 데이터 등록을 시작합니다!")
     async with LinkedRolesOAuth2(client_id=os.getenv("CLIENT_ID"), token=os.getenv("BOT_TOKEN")) as client:
-        async for rec in async_list(list_chunk(records, 2)):
-            try:
-                result = await client.register_role_metadata(records=tuple(rec), force=True)
-            except Exception as e:
-                await inter.followup.send(e)
-                await asyncio.sleep(10)
-            else:
-                await inter.followup.send(result)
-                await asyncio.sleep(10)
+        try:
+            await client.register_role_metadata(records=tuple(records), force=True)
+        except Exception as e:
+            await inter.edit_original_message(e)
+        else:
+            await inter.edit_original_message(content="> :star2: 역할 추가가 완료되었습니다!")
 
 bot.run(os.getenv("BOT_TOKEN"))
