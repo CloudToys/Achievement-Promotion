@@ -5,7 +5,7 @@ from typing import Any
 
 import aiohttp
 import uvicorn
-from cryptography.fetnet import Fernet
+from cryptography.fernet import Fernet
 from dotenv import load_dotenv
 from fastapi import Cookie, FastAPI, HTTPException, Request, Response
 from fastapi.responses import RedirectResponse
