@@ -9,6 +9,8 @@ from linked_roles import RoleMetadataType, LinkedRolesOAuth2, RoleMetadataRecord
 
 load_dotenv()
 bot = commands.InteractionBot(
+    status=disnake.Status.dnd,
+    activity=disnake.Activity(type=disnake.ActivityType.watching, name="Achievements"),
     intents=disnake.Intents.default()
 )
 
