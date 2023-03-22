@@ -22,7 +22,7 @@ async def async_list(values: list) -> Any:
 @commands.is_owner()
 async def _addConnection(inter: disnake.ApplicationCommandInteraction):
     await inter.response.defer(ephemeral=True)
-    client = LinkedRolesOAuth2(client_id=bot.user.id, token=os.getenv("BOT_TOKEN"))
+    client = LinkedRolesOAuth2(client_id=os.getenv("CLIENT_ID"), token=os.getenv("BOT_TOKEN"))
     records = [
         RoleMetadataRecord(
             key="complete",
@@ -37,10 +37,12 @@ async def _addConnection(inter: disnake.ApplicationCommandInteraction):
             type=RoleMetadataType.interger_greater_than_or_equal
         )
     ]
-    session = aiohttp.ClientSession()
-    r = await session.get(f"http://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid={os.getenv('STEAM_GAME_ID')}&key={os.getenv('STEAM_API_KEY')}&steamid={os.getenv('STEAM_OWNER_ID')}&l=ko")
-    res = await r.json()
-    data = res["playerstats"]
+    data = None
+    async with aiohttp.ClientSession() as cs:
+        async with cs.get(f"http://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid={os.getenv('STEAM_GAME_ID')}&key={os.getenv('STEAM_API_KEY')}&steamid={os.getenv('STEAM_OWNER_ID')}&l=ko") as r:
+            res = await r.json()
+            data = res["playerstats"]
+
     async for achievement in async_list(data["achievements"]):
         records.append(RoleMetadataRecord(
             key=achievement["apiname"],
