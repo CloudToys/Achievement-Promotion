@@ -4,7 +4,7 @@ from typing import Any
 
 import aiohttp
 import disnake
-from disnake import commands
+from disnake.ext import commands
 from dotenv import load_dotenv
 from linked_roles import RoleMetadataType, LinkedRolesOAuth2, RoleMetadataRecord
 
