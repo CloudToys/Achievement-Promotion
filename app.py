@@ -24,7 +24,7 @@ client = LinkedRolesOAuth2(
     client_secret=os.getenv("CLIENT_SECRET"),
     redirect_uri=f"{os.getenv('REDIRECT_URI')}/discord",
     token=os.getenv("BOT_TOKEN"),
-    scopes=("identify", "role_connection_write"),
+    scopes=("identify", "role_connection.write"),
     state=os.getenv("COOKIE_SECRET")
 )
 fn = Fernet(os.getenv("ENCRYPT_KEY"))
