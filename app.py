@@ -27,7 +27,7 @@ client = LinkedRolesOAuth2(
     scopes=("identify", "role_connection_write"),
     state=os.getenv("COOKIE_SECRET")
 )
-fn = Fernet(os.getenv("COOKIE_SECRET"))
+fn = Fernet(os.getenv("ENCRYPT_KEY"))
 
 def encrypt(text: str) -> str:
     return fn.encrypt(text.encode())
