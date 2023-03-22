@@ -1,3 +1,6 @@
+cryptography
 disnake
+fastapi
 linked-roles
-steam[client]
+python-dotenv
+uvicorn
