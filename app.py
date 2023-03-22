@@ -121,9 +121,9 @@ async def update_metadata(response: Response, code: str, steam_id: str = Cookie(
     async for achieve in async_list(data["achievements"]):
         if achieve["achieved"] == 1:
             success += 1
-        role.add_or_edit_metadata(key=achieve["apiname"], value=True if achieve["achieved"] == 1 else False)
     percentage = (success / total) * 100
     role.add_or_edit_metadata(key="percentage", value=percentage)
+    role.add_or_edit_metadata(key="completed", value=False)
     if percentage == 100:
         role.add_or_edit_metadata(key="completed", value=True)
     await user.edit_role_connection(role)
