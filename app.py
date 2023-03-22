@@ -75,7 +75,8 @@ async def setup(request: Request):
         raise HTTPException(status_code=404, detail="We can't verify that you have Steam profile.")
     url = client.get_oauth_url()
     response = RedirectResponse(url=url)
-    token = encrypt(request.query_params.get("openid.claimed_id"))
+    openid = request.query_params.get("openid.claimed_id").split("/")[-1]
+    token = encrypt(openid)
     token = token.decode()
     response.set_cookie(key="steam_id", value=token, max_age=1800)
     return response
