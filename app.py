@@ -33,8 +33,8 @@ fn = Fernet(key)
 def encrypt(text: str) -> str:
     return fn.encrypt(text.encode())
 
-def decrypt(text: str) -> str:
-    return fn.decrypt(text).decode()
+def decrypt(token: str) -> str:
+    return fn.decrypt(bytes(token)).decode()
 
 async def async_list(values: list) -> Any:
     for value in values:
