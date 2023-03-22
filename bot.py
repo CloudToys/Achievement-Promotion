@@ -51,7 +51,11 @@ async def _addConnection(inter: disnake.ApplicationCommandInteraction):
         ))
     
     async with LinkedRolesOAuth2(client_id=os.getenv("CLIENT_ID"), token=os.getenv("BOT_TOKEN")) as client:
-        result = await client.register_role_metadata(records=tuple(records), force=True)
-        await inter.edit_original_message(content=str(result))
+        try:
+            result = await client.register_role_metadata(records=tuple(records), force=True)
+        except Exception as e:
+            await inter.edit_original_message(content=f"연동에 실패했습니다.\n{e}")
+        else:
+            await inter.edit_original_message(content=str(result))
 
 bot.run(os.getenv("BOT_TOKEN"))
