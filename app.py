@@ -57,7 +57,7 @@ async def link():
         'openid.claimed_id': "http://specs.openid.net/auth/2.0/identifier_select",
         'openid.mode': "checkid_setup",
         'openid.return_to': f"{os.getenv('REDIRECT_URI')}/steam",
-        'openid.realm': os.getenv("DEFAULT_URI")
+        'openid.realm': f"{os.getenv('REDIRECT_URI')}/steam"
     }
     query_string = parse.urlencode(u)
     auth_url = steam_openid_url + "?" + query_string
