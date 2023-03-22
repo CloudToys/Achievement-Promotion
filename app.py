@@ -129,7 +129,7 @@ async def update_metadata(response: Response, code: str, steam_id: str = Cookie(
     success = 0
     total = len(data["achievements"])
     role.add_or_edit_metadata(key="tutorial", value=False)
-    role.add_or_edit_metadata(key="allperfetct", value=False)
+    role.add_or_edit_metadata(key="allperfect", value=False)
     async for achieve in async_list(data["achievements"]):
         if achieve["achieved"] == 1:
             if achieve["apiname"] == "honor_roll":
