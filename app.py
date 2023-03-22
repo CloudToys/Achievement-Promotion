@@ -34,7 +34,7 @@ def encrypt(text: str) -> str:
     return fn.encrypt(text.encode())
 
 def decrypt(token: str) -> str:
-    return fn.decrypt(bytes(token)).decode()
+    return fn.decrypt(token).decode()
 
 async def async_list(values: list) -> Any:
     for value in values:
