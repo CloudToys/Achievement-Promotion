@@ -55,9 +55,14 @@ async def _addConnection(inter: disnake.ApplicationCommandInteraction):
     
     await inter.edit_original_message(content="역할 데이터 등록을 시작합니다!")
     async with LinkedRolesOAuth2(client_id=os.getenv("CLIENT_ID"), token=os.getenv("BOT_TOKEN")) as client:
-        async for rec in async_list(list_chunk(records, 3)):
-            result = await client.register_role_metadata(records=tuple(rec), force=True)
-            await inter.followup.send(result)
-            await asyncio.sleep(5)
+        async for rec in async_list(list_chunk(records, 2)):
+            try:
+                result = await client.register_role_metadata(records=tuple(rec), force=True)
+            except Exception as e:
+                await inter.followup.send(e)
+                await asyncio.sleep(5)
+            else:
+                await inter.followup.send(result)
+                await asyncio.sleep(5)
 
 bot.run(os.getenv("BOT_TOKEN"))
