@@ -86,8 +86,9 @@ async def validate(data: dict) -> bool:
 
     session = aiohttp.ClientSession()
     r = await session.post(base, data=data)
+    text = await r.text()
 
-    if "is_valid:true" in r.text:
+    if "is_valid:true" in text:
         return True
 
     return False
