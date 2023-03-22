@@ -146,7 +146,7 @@ async def update_metadata(response: Response, code: str, steam_id: str = Cookie(
         role.add_or_edit_metadata(key="complete", value=True)
     await user.edit_role_connection(role)
     response.set_cookie(key="steam_id", value="", max_age=1)
-    return "연동이 완료되었습니다! Discord로 돌아가세요."
+    return "Successfully connected! Now go back to Discord and check result."
 
 
 uvicorn.run(app, host="0.0.0.0", port=4278)
