@@ -45,7 +45,7 @@ async def _addConnection(inter: disnake.ApplicationCommandInteraction):
         ),
         RoleMetadataRecord(
             key="percentage",
-            name="Achievement Percentage",
+            name="Percent of Achievement",
             description="% 이상의 도전 과제를 달성해야 합니다.",
             type=RoleMetadataType.interger_greater_than_or_equal
         ),
