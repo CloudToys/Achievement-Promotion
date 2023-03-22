@@ -94,7 +94,7 @@ async def validate(data: dict) -> bool:
     return False
 
 @app.get('/callback/discord')
-async def update_metadata(response: Response, code: str, steam_id: str = Cookie()):
+async def update_metadata(response: Response, code: str, steam_id: Cookie()):
     token = await client.get_access_token(code)
     user = await client.fetch_user(token)
 
