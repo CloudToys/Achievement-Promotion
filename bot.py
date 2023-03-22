@@ -60,9 +60,9 @@ async def _addConnection(inter: disnake.ApplicationCommandInteraction):
                 result = await client.register_role_metadata(records=tuple(rec), force=True)
             except Exception as e:
                 await inter.followup.send(e)
-                await asyncio.sleep(5)
+                await asyncio.sleep(10)
             else:
                 await inter.followup.send(result)
-                await asyncio.sleep(5)
+                await asyncio.sleep(10)
 
 bot.run(os.getenv("BOT_TOKEN"))
