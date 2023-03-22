@@ -118,8 +118,14 @@ async def update_metadata(response: Response, code: str, steam_id: str = Cookie(
         role = RoleConnection(platform_name=f"Steam - {data['gameName']}", platform_username=abc["response"]["players"][0]["personaname"])
     success = 0
     total = len(data["achievements"])
+    role.add_or_edit_metadata(key="tutorial", value=False)
+    role.add_or_edit_metadata(key="allperfetct", value=False)
     async for achieve in async_list(data["achievements"]):
         if achieve["achieved"] == 1:
+            if achieve["apiname"] == "honor_roll":
+                role.add_or_edit_metadata(key="tutorial", value=True)
+            if achieve["apiname"] == "go_to_bed":
+                role.add_or_edit_metadata(key="allperfetct", value=True)
             success += 1
     percentage = (success / total) * 100
     role.add_or_edit_metadata(key="percentage", value=percentage)
