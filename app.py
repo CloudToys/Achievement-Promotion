@@ -69,7 +69,7 @@ async def setup(request: Request, response: Response):
     if not valid:
         raise HTTPException(status_code=404, detail="We can't verify that you have Steam profile.")
     url = client.get_oauth_url()
-    response.set_cookie(key="steam_id", value=encrypt(request.query_params.get("openid.claimed_id")), max_age=300)
+    response.set_cookie(key="steam_id", value=encrypt(request.query_params.get("openid.claimed_id")), max_age=1800)
     return RedirectResponse(url=url)
 
 async def validate(data: dict) -> bool:
@@ -94,7 +94,7 @@ async def validate(data: dict) -> bool:
     return False
 
 @app.get('/callback/discord')
-async def update_metadata(response: Response, code: str, steam_id: Cookie()):
+async def update_metadata(response: Response, code: str, steam_id: str = Cookie()):
     token = await client.get_access_token(code)
     user = await client.fetch_user(token)
 
