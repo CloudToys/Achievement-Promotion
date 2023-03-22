@@ -34,7 +34,7 @@ def encrypt(text: str) -> str:
     return fn.encrypt(text.encode())
 
 def decrypt(token: str) -> str:
-    return fn.decrypt(bytes(token.encode())).decode()
+    return fn.decrypt(bytes(token)).decode()
 
 async def async_list(values: list) -> Any:
     for value in values:
@@ -75,7 +75,9 @@ async def setup(request: Request):
         raise HTTPException(status_code=404, detail="We can't verify that you have Steam profile.")
     url = client.get_oauth_url()
     response = RedirectResponse(url=url)
-    response.set_cookie(key="steam_id", value=encrypt(request.query_params.get("openid.claimed_id")), max_age=1800)
+    token = encrypt(request.query_params.get("openid.claimed_id"))
+    token = token.decode()
+    response.set_cookie(key="steam_id", value=token, max_age=1800)
     return response
 
 async def validate(data: dict) -> bool:
