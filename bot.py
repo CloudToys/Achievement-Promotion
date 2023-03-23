@@ -28,19 +28,19 @@ async def _addConnection(inter: disnake.ApplicationCommandInteraction):
     await inter.response.defer(ephemeral=True)
     records = [
         RoleMetadataRecord(
-            key="tutorial",
+            key="honor_roll",
             name="Honor roll",
             description="튜토리얼 스테이지를 퍼펙트로 클리어해야 합니다.",
             type=RoleMetadataType.boolean_equal
         ),
         RoleMetadataRecord(
-            key="clear",
+            key="new_day",
             name="New Day",
             description="모든 스테이지를 클리어해야 합니다.",
             type=RoleMetadataType.boolean_equal
         ),
         RoleMetadataRecord(
-            key="allperfect",
+            key="go_to_bed",
             name="Go to bed",
             description="모든 스테이지를 퍼펙트로 클리어해야 합니다.",
             type=RoleMetadataType.boolean_equal
