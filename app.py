@@ -130,22 +130,21 @@ async def update_metadata(response: Response, code: str, steam_id: str = Cookie(
         role = RoleConnection(platform_name=f"Steam - {data['gameName']}", platform_username=abc["response"]["players"][0]["personaname"])
     success = 0
     total = len(data["achievements"])
-    role.add_or_edit_metadata(key="tutorial", value=False)
-    role.add_or_edit_metadata(key="allperfect", value=False)
     async for achieve in async_list(data["achievements"]):
+        if achieve["apiname"] == "honor_roll":
+            role.add_or_edit_metadata(key="honor_roll", value=True if achieve["achieved"] == 1 else False)
+        if achieve["apiname"] == "go_to_bed":
+            role.add_or_edit_metadata(key="go_to_bed", value=True if achieve["achieved"] == 1 else False)
+        if achieve["apiname"] == "new_day":
+            role.add_or_edit_metadata(key="new_day", value=True if achieve["achieved"] == 1 else False)
         if achieve["achieved"] == 1:
-            if achieve["apiname"] == "honor_roll":
-                role.add_or_edit_metadata(key="honor_roll", value=True)
-            if achieve["apiname"] == "go_to_bed":
-                role.add_or_edit_metadata(key="go_to_bed", value=True)
-            if achieve["apiname"] == "new_day":
-                role.add_or_edit_metadata(key="new_day", value=True)
             success += 1
     percentage = round((success / total) * 100)
     role.add_or_edit_metadata(key="percentage", value=percentage)
-    role.add_or_edit_metadata(key="complete", value=False)
-    if percentage == 100:
+    if success == total:
         role.add_or_edit_metadata(key="complete", value=True)
+    else:
+        role.add_or_edit_metadata(key="complete", value=False)
     await user.edit_role_connection(role)
     response.set_cookie(key="steam_id", value="", max_age=1)
     return "Successfully connected! Now go back to Discord and check result."

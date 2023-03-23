@@ -60,10 +60,10 @@ async def _addConnection(inter: disnake.ApplicationCommandInteraction):
     ]
     async with LinkedRolesOAuth2(client_id=os.getenv("CLIENT_ID"), token=os.getenv("BOT_TOKEN")) as client:
         try:
-            await client.register_role_metadata(records=tuple(records), force=True)
+            result = await client.register_role_metadata(records=tuple(records), force=True)
         except Exception as e:
             await inter.edit_original_message(e)
         else:
-            await inter.edit_original_message(content="> :star2: 역할 추가가 완료되었습니다!")
+            await inter.edit_original_message(content=f"> :star2: 역할 추가가 완료되었습니다!\n{result}")
 
 bot.run(os.getenv("BOT_TOKEN"))
