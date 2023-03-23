@@ -125,9 +125,7 @@ async def update_metadata(response: Response, code: str, steam_id: str = Cookie(
 
     abc = await session.get(f"http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key={os.getenv('STEAM_API_KEY')}&steamids={steam_id}")
     abc = await abc.json()
-    role = await user.fetch_role_connection()
-    if role is None:
-        role = RoleConnection(platform_name=f"Steam - {data['gameName']}", platform_username=abc["response"]["players"][0]["personaname"])
+    role = RoleConnection(platform_name=f"Steam - {data['gameName']}", platform_username=abc["response"]["players"][0]["personaname"])
     success = 0
     total = len(data["achievements"])
     async for achieve in async_list(data["achievements"]):
