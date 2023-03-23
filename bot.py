@@ -34,6 +34,12 @@ async def _addConnection(inter: disnake.ApplicationCommandInteraction):
             type=RoleMetadataType.boolean_equal
         ),
         RoleMetadataRecord(
+            key="clear",
+            name="New Day",
+            description="모든 스테이지를 클리어해야 합니다.",
+            type=RoleMetadataType.boolean_equal
+        ),
+        RoleMetadataRecord(
             key="allperfect",
             name="Go to bed",
             description="모든 스테이지를 퍼펙트로 클리어해야 합니다.",
@@ -50,7 +56,7 @@ async def _addConnection(inter: disnake.ApplicationCommandInteraction):
             name="Percent of Achievement",
             description="% 이상의 도전 과제를 달성해야 합니다.",
             type=RoleMetadataType.interger_greater_than_or_equal
-        ),
+        )
     ]
     async with LinkedRolesOAuth2(client_id=os.getenv("CLIENT_ID"), token=os.getenv("BOT_TOKEN")) as client:
         try:
