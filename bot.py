@@ -30,32 +30,50 @@ async def _addConnection(inter: disnake.ApplicationCommandInteraction):
         RoleMetadataRecord(
             key="honor_roll",
             name="Honor roll",
-            description="튜토리얼 스테이지를 퍼펙트로 클리어해야 합니다.",
-            type=RoleMetadataType.boolean_equal
+            description="Perfect the tutorial",
+            type=RoleMetadataType.boolean_equal,
+            name_localizations={
+                "ko": ""
+            },
+            description_localizations={
+                "ko": ""
+            }
         ),
         RoleMetadataRecord(
             key="new_day",
             name="New Day",
-            description="모든 스테이지를 클리어해야 합니다.",
-            type=RoleMetadataType.boolean_equal
+            description="Get through the morning",
+            type=RoleMetadataType.boolean_equal,
+            name_localizations={
+                "ko": ""
+            },
+            description_localizations={
+                "ko": ""
+            }
         ),
         RoleMetadataRecord(
             key="go_to_bed",
             name="Go to bed",
-            description="모든 스테이지를 퍼펙트로 클리어해야 합니다.",
-            type=RoleMetadataType.boolean_equal
-        ),
-        RoleMetadataRecord(
-            key="complete",
-            name="ALL CLEAR!!",
-            description="게임의 도전 과제를 모두 달성해야 합니다.",
-            type=RoleMetadataType.boolean_equal
+            description="Get all perfect scores",
+            type=RoleMetadataType.boolean_equal,
+            name_localizations={
+                "ko": ""
+            },
+            description_localizations={
+                "ko": ""
+            }
         ),
         RoleMetadataRecord(
             key="percentage",
-            name="Percent of Achievement",
-            description="% 이상의 도전 과제를 달성해야 합니다.",
-            type=RoleMetadataType.interger_greater_than_or_equal
+            name="% of Achievements",
+            description="% of cleared achievements",
+            type=RoleMetadataType.interger_greater_than_or_equal,
+            name_localizations={
+                "ko": ""
+            },
+            description_localizations={
+                "ko": ""
+            }
         )
     ]
     async with LinkedRolesOAuth2(client_id=os.getenv("CLIENT_ID"), token=os.getenv("BOT_TOKEN")) as client:
