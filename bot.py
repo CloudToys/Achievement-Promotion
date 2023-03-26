@@ -33,10 +33,10 @@ async def _addConnection(inter: disnake.ApplicationCommandInteraction):
             description="Perfect the tutorial",
             type=RoleMetadataType.boolean_equal,
             name_localizations={
-                "ko": ""
+                "ko": "우등생"
             },
             description_localizations={
-                "ko": ""
+                "ko": "튜토리얼 스테이지를 퍼펙트로 클리어해야 합니다."
             }
         ),
         RoleMetadataRecord(
@@ -45,10 +45,10 @@ async def _addConnection(inter: disnake.ApplicationCommandInteraction):
             description="Get through the morning",
             type=RoleMetadataType.boolean_equal,
             name_localizations={
-                "ko": ""
+                "ko": "밝아오는 새로운 아침"
             },
             description_localizations={
-                "ko": ""
+                "ko": "모든 스테이지를 클리어해야 합니다."
             }
         ),
         RoleMetadataRecord(
@@ -57,10 +57,10 @@ async def _addConnection(inter: disnake.ApplicationCommandInteraction):
             description="Get all perfect scores",
             type=RoleMetadataType.boolean_equal,
             name_localizations={
-                "ko": ""
+                "ko": "자러 갈 시간"
             },
             description_localizations={
-                "ko": ""
+                "ko": "모든 스테이지를 퍼펙트로 클리어해야 합니다."
             }
         ),
         RoleMetadataRecord(
@@ -69,10 +69,10 @@ async def _addConnection(inter: disnake.ApplicationCommandInteraction):
             description="% of cleared achievements",
             type=RoleMetadataType.interger_greater_than_or_equal,
             name_localizations={
-                "ko": ""
+                "ko": "% 도전 과제 달성률"
             },
             description_localizations={
-                "ko": ""
+                "ko": "%의 도전 과제를 달성해야 합니다."
             }
         )
     ]

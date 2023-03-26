@@ -139,10 +139,6 @@ async def update_metadata(response: Response, code: str, steam_id: str = Cookie(
             success += 1
     percentage = round((success / total) * 100)
     role.add_or_edit_metadata(key="percentage", value=percentage)
-    if success == total:
-        role.add_or_edit_metadata(key="complete", value=True)
-    else:
-        role.add_or_edit_metadata(key="complete", value=False)
     await user.edit_role_connection(role)
     response.set_cookie(key="steam_id", value="", max_age=1)
     return "Successfully connected! Now go back to Discord and check result."
