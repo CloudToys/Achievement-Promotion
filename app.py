@@ -49,11 +49,11 @@ async def startup():
 async def shutdown():
     await client.close()
 
-@app.get("/")
+@app.get("/roles")
 async def root():
     return RedirectResponse(url="https://github.com/CloudToys/Achievement-Promotion")
 
-@app.get("/verify")
+@app.get("/roles/verify")
 async def link():
     steam_openid_url = "https://steamcommunity.com/openid/login"
     u = {
@@ -68,7 +68,7 @@ async def link():
     auth_url = steam_openid_url + "?" + query_string
     return RedirectResponse(auth_url)
 
-@app.get('/callback/steam') 
+@app.get('/roles/callback/steam') 
 async def setup(request: Request):
     valid = await validate(dict(request.query_params))
     if not valid:
@@ -104,7 +104,7 @@ async def validate(data: dict) -> bool:
 
     return False
 
-@app.get('/callback/discord')
+@app.get('/roles/callback/discord')
 async def update_metadata(response: Response, code: str, steam_id: str = Cookie()):
     token = await client.get_access_token(code)
     user = await client.fetch_user(token)
